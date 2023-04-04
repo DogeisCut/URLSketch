@@ -207,10 +207,16 @@ body {
     padding: 10px;
   }
 
-  #color-wheel {
+  .color-wheel {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     background: radial-gradient(closest-side, white, #ffffff00),
                 conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+  }
+
+  .value-slider {
+    width: 50px;
+    height: 200px;
+    background: linear-gradient(white,black)
   }
