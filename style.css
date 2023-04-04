@@ -220,3 +220,10 @@ body {
     height: 200px;
     background: linear-gradient(white,black)
   }
+
+  /* Canvas */
+
+  .paint-canvas {
+    width: auto;
+    height: auto;
+  }
