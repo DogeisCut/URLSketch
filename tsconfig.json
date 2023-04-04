@@ -4,12 +4,19 @@
         "module": "CommonJS",
         "sourceMap": true,
         "newLine": "LF",
-        "outDir": "./lib/",
+        "outDir": "./build",
         "declaration": true,
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true
-    }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        ".git",
+        "node_modules"
+    ]
 }
