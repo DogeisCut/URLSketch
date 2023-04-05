@@ -46,7 +46,7 @@ var SketchCanvas = /** @class */ (function () {
     function SketchCanvas(width, height) {
         this.width = width;
         this.height = height;
-        this.translation = { x: width, y: height }; // center the box in the canvas
+        this.translation = { x: 0, y: 0 };
         this.isPanning = false;
         this.lastPanPosition = { x: 0, y: 0 };
         // add event listeners for panning
@@ -83,6 +83,15 @@ var SketchCanvas = /** @class */ (function () {
 var currentCanvas = new SketchCanvas(800, 600);
 function mainLoop() {
     requestAnimationFrame(mainLoop);
+    if ((ctx === null || ctx === void 0 ? void 0 : ctx.fillStyle) !== undefined) {
+        ctx.fillStyle = 'black';
+    }
+    ctx === null || ctx === void 0 ? void 0 : ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx === null || ctx === void 0 ? void 0 : ctx.fillRect(-1000 + currentCanvas.translation.x, 0 + currentCanvas.translation.y, 1000 + currentCanvas.width, 1000);
+    ctx === null || ctx === void 0 ? void 0 : ctx.fillRect(1000 + currentCanvas.translation.x, 0 + currentCanvas.translation.y, 1000 + currentCanvas.width, 1000);
+    if ((ctx === null || ctx === void 0 ? void 0 : ctx.fillStyle) !== undefined) {
+        ctx.fillStyle = 'blue';
+    }
     ctx === null || ctx === void 0 ? void 0 : ctx.fillRect(-currentCanvas.width / 2 + currentCanvas.translation.x, -currentCanvas.height / 2 + currentCanvas.translation.y, currentCanvas.width, currentCanvas.height);
 }
 mainLoop();

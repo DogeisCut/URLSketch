@@ -107,6 +107,16 @@ var currentCanvas: SketchCanvas = new SketchCanvas(800,600)
 
 function mainLoop() {
     requestAnimationFrame(mainLoop);
+    if (ctx?.fillStyle !== undefined) { 
+      ctx.fillStyle = 'black';
+    }
+    ctx?.clearRect(0, 0, canvas.width, canvas.height)
+    ctx?.fillRect(-1000+currentCanvas.translation.x,0+ currentCanvas.translation.y,1000+currentCanvas.width,1000)
+    ctx?.fillRect(1000+currentCanvas.translation.x,0+ currentCanvas.translation.y,1000+currentCanvas.width,1000)
+    if (ctx?.fillStyle !== undefined) { 
+      ctx.fillStyle = 'blue';
+    }
     ctx?.fillRect(-currentCanvas.width/2 + currentCanvas.translation.x, -currentCanvas.height/2 + currentCanvas.translation.y,currentCanvas.width,currentCanvas.height);
+
 }
 mainLoop()
