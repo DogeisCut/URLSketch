@@ -38,7 +38,7 @@
               </div>
               
               <div class="dropdown">
-                <button class="dropdown-toggle image-button">Image</button>
+                <button class="dropdown-toggle edit-image-button">Image</button>
                 <div class="dropdown-menu">
                   <button class="dropdown-item image-button-resize">Resize</button>
                   <button class="dropdown-item image-button-crop">Crop</button>
@@ -75,64 +75,65 @@
               </div>
             <div class="left-side">
                 <button class="image-button tools-menu-button">
-                    <img src="assets/tools-menu-button.png" alt="Tools Menu">
+                    <img src="assets/tools-menu-button.png" alt="Tools Menu" title="Tools Menu">
                 </button>
                 <button class="image-button colors-menu-button">
-                    <img src="assets/colors-menu-button.png" alt="Colors Menu">
+                    <img src="assets/colors-menu-button.png" alt="Colors Menu" title="Colors Menu">
                 </button>
                 <button class="image-button history-menu-button">
-                    <img src="assets/history-menu-button.png" alt="History Menu">
+                    <img src="assets/history-menu-button.png" alt="History Menu" title="History Menu">
                 </button>
                 <button class="image-button layers-menu-button">
-                    <img src="assets/layers-menu-button.png" alt="Layers Menu">
+                    <img src="assets/layers-menu-button.png" alt="Layers Menu" title="Layers Menu">
                 </button>
             </div>
         </div>
         <div class="top-bar top-bar-row2">
             <!--Top bar 2, for utilities and quick controls-->
             <button class="image-button new-file-button new-file-button">
-                <img src="assets/new-file-button.png" alt="New File" height="24">
+                <img src="assets/new-file-button.png" alt="New File" title="New File">
             </button>
             <button class="image-button new-file-button open-file-button">
-                <img src="assets/open-file-button" alt="Open File">
+                <img src="assets/open-file-button.png" alt="Open File" title="Open File">
             </button>
             <button class="image-button new-file-button save-file-button">
-                <img src="assets/save-file-button" alt="Save File">
+                <img src="assets/save-file-button.png" alt="Save File" title="Save File">
             </button>
 
             <div class="v-separator"></div>
 
             <button class="image-button new-file-button cut-selection-button">
-                <img src="assets/cut-selection-button" alt="Cut Selection">
+                <img src="assets/cut-selection-button.png" alt="Cut Selection" title="Cut Selection">
             </button>
             <button class="image-button new-file-button copy-selection-button">
-                <img src="assets/copy-selection-button" alt="Copy Selection">
+                <img src="assets/copy-selection-button.png" alt="Copy Selection" title="Copy Selection">
             </button>
             <button class="image-button new-file-button paste-button">
-                <img src="assets/paste-button" alt="Paste">
+                <img src="assets/paste-button.png" alt="Paste" title="Paste">
             </button>
             <button class="image-button new-file-button deselect-button">
-                <img src="assets/deselect-button" alt="Deselect">
+                <img src="assets/deselect-button.png" alt="Deselect" title="Deselect">
             </button>
 
             <div class="v-separator"></div>
 
             <button class="image-button new-file-button undo-button">
-                <img src="assets/undo-button" alt="Undo">
+                <img src="assets/undo-button.png" alt="Undo" title="Undo">
             </button>
             <button class="image-button new-file-button redo-button">
-                <img src="assets/redo-button" alt="Redo">
+                <img src="assets/redo-button.png" alt="Redo" title="Redo">
             </button>
         </div>
         <div class="top-bar top-bar-row3">
             <!--Top bar 3, for tool specific settings, for now, it will be an empty dropdown as the javascript will fill this in based on the tool-->
+            <label>Tool:</label>
             <select>
                 <!--this selector will be populated with all avaible tools-->
             </select>
         </div>
         <canvas class="paint-canvas" width=1920 height=1080>
         </canvas>
-        <div class="window">
+        <div class="window" style="width: 400px; height: 300px;">
             <div class="window-header">
               <span class="window-title">Colors</span>
               <button class="window-close">X</button>
@@ -140,6 +141,16 @@
             <div class="window-content">
                 <div class="color-wheel"></div>
                 <div class="value-slider"></div>
+            </div>
+          </div>
+
+          <div class="window" style="width: 150px; height: 450px;">
+            <div class="window-header">
+              <span class="window-title">Tools</span>
+              <button class="window-close">X</button>
+            </div>
+            <div class="window-content">
+
             </div>
           </div>
     </body>
