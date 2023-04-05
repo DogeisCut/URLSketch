@@ -3,16 +3,17 @@ const ctx = canvas.getContext("2d");
 
 const windowEl = document.querySelectorAll('.window-header');
 
-let isDragging = false;
-let currentX;
-let currentY;
-let initialX;
-let initialY;
-let xOffset = 0;
-let yOffset = 0;
-let hasInitialMouseDown = false;
-
 windowEl.forEach(element => {
+
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+    let hasInitialMouseDown = false;
+
     element.addEventListener('mousedown', (event) => {
         if (!hasInitialMouseDown) {
             console.log("clicked window");
@@ -27,7 +28,7 @@ windowEl.forEach(element => {
         }
     });
 
-    element.addEventListener('mouseup', () => {
+    document.addEventListener('mouseup', () => {
         initialX = currentX;
         initialY = currentY;
 
@@ -35,7 +36,7 @@ windowEl.forEach(element => {
         hasInitialMouseDown = false;
     });
 
-    element.addEventListener('mousemove', (event) => {
+    document.addEventListener('mousemove', (event) => {
         if (isDragging) {
             event.preventDefault();
 
@@ -96,16 +97,52 @@ class SketchCanvas {
     }
 }
 
-var currentCanvas = new SketchCanvas(800, 600);
+var currentSketchCanvas = new SketchCanvas(800, 600);
 
-function mainLoop() {
-    requestAnimationFrame(mainLoop);
-    ctx.fillStyle = 'black';
+function draw() {
+    requestAnimationFrame(draw);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillRect(-1000 + currentCanvas.translation.x, 0 + currentCanvas.translation.y, 1000 + currentCanvas.width, 1000);
-    ctx.fillRect(1000 + currentCanvas.translation.x, 0 + currentCanvas.translation.y, 1000 + currentCanvas.width, 1000);
-    ctx.fillStyle = 'blue';
-    ctx.fillRect(-currentCanvas.width/2 + currentCanvas.translation.x, -currentCanvas.height/2 + currentCanvas.translation.y,currentCanvas.width,currentCanvas.height);
+    
+    //Borders 
+    ctx.fillStyle = '#303030';
+    ctx.strokeStyle = "#00000000"
+    ctx.lineWidth = 0;
+    //Left
+    ctx.beginPath();
+    ctx.moveTo(0+currentSketchCanvas.translation.x,0);
+    ctx.lineTo(0+currentSketchCanvas.translation.x,canvas.height);
+    ctx.lineTo(0,canvas.height);
+    ctx.lineTo(0,0);
+    ctx.fill();
+    //Right
+    ctx.beginPath();
+    ctx.moveTo(currentSketchCanvas.width+currentSketchCanvas.translation.x,0);
+    ctx.lineTo(currentSketchCanvas.width+currentSketchCanvas.translation.x,canvas.height);
+    ctx.lineTo(canvas.width,canvas.height);
+    ctx.lineTo(canvas.width,0);
+    ctx.fill();
+    //Bottom
+    ctx.beginPath();
+    ctx.moveTo(canvas.width,canvas.height);
+    ctx.lineTo(0,canvas.height);
+    ctx.lineTo(0,currentSketchCanvas.height+currentSketchCanvas.translation.y);
+    ctx.lineTo(canvas.width,currentSketchCanvas.height+currentSketchCanvas.translation.y);
+    ctx.fill();
+    //Top
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(canvas.width,0);
+    ctx.lineTo(canvas.width,0+currentSketchCanvas.translation.y);
+    ctx.lineTo(0,0+currentSketchCanvas.translation.y);
+    ctx.fill();
+
+    //Canvas Border
+    ctx.strokeStyle = "#636363"
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.rect(currentSketchCanvas.translation.x, currentSketchCanvas.translation.y,currentSketchCanvas.width,currentSketchCanvas.height);
+    ctx.stroke()
+
 
   }
-  mainLoop();
+  draw();
