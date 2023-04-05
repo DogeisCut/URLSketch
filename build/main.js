@@ -46,7 +46,44 @@ var SketchCanvas = /** @class */ (function () {
     function SketchCanvas(width, height) {
         this.width = width;
         this.height = height;
+        this.translation = { x: width, y: height }; // center the box in the canvas
+        this.isPanning = false;
+        this.lastPanPosition = { x: 0, y: 0 };
+        // add event listeners for panning
+        canvas.addEventListener("mousedown", this.handleMouseDown.bind(this));
+        canvas.addEventListener("mousemove", this.handleMouseMove.bind(this));
+        canvas.addEventListener("mouseup", this.handleMouseUp.bind(this));
+        canvas.addEventListener("mouseleave", this.handleMouseUp.bind(this));
     }
+    SketchCanvas.prototype.handleMouseDown = function (event) {
+        if (event.button === 1) {
+            // middle mouse button pressed
+            this.isPanning = true;
+            this.lastPanPosition = { x: event.clientX, y: event.clientY };
+        }
+    };
+    SketchCanvas.prototype.handleMouseMove = function (event) {
+        if (this.isPanning) {
+            // pan the canvas
+            var dx = event.clientX - this.lastPanPosition.x;
+            var dy = event.clientY - this.lastPanPosition.y;
+            this.translation.x += dx;
+            this.translation.y += dy;
+            this.lastPanPosition = { x: event.clientX, y: event.clientY };
+        }
+    };
+    SketchCanvas.prototype.handleMouseUp = function (event) {
+        if (event.button === 1) {
+            // middle mouse button released
+            this.isPanning = false;
+        }
+    };
     return SketchCanvas;
 }());
+var currentCanvas = new SketchCanvas(800, 600);
+function mainLoop() {
+    requestAnimationFrame(mainLoop);
+    ctx === null || ctx === void 0 ? void 0 : ctx.fillRect(-currentCanvas.width / 2 + currentCanvas.translation.x, -currentCanvas.height / 2 + currentCanvas.translation.y, currentCanvas.width, currentCanvas.height);
+}
+mainLoop();
 //# sourceMappingURL=main.js.map

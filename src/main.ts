@@ -58,9 +58,55 @@ function setTranslate(xPos: number, yPos: number, el: HTMLElement) {
 class SketchCanvas {
     width: number;
     height: number;
-
-  constructor(width: number, height: number) {
-    this.width = width;
-    this.height = height;
+    translation: { x: number, y: number };
+    isPanning: boolean;
+    lastPanPosition: { x: number, y: number };
+  
+    constructor(width: number, height: number) {
+        this.width = width;
+        this.height = height;
+        this.translation = { x: 0, y: 0 };
+        this.isPanning = false;
+        this.lastPanPosition = { x: 0, y: 0 };
+  
+      // add event listeners for panning
+      canvas.addEventListener("mousedown", this.handleMouseDown.bind(this));
+      canvas.addEventListener("mousemove", this.handleMouseMove.bind(this));
+      canvas.addEventListener("mouseup", this.handleMouseUp.bind(this));
+      canvas.addEventListener("mouseleave", this.handleMouseUp.bind(this));
+    }
+  
+    handleMouseDown(event: MouseEvent) {
+      if (event.button === 1) {
+        // middle mouse button pressed
+        this.isPanning = true;
+        this.lastPanPosition = { x: event.clientX, y: event.clientY };
+      }
+    }
+  
+    handleMouseMove(event: MouseEvent) {
+      if (this.isPanning) {
+        // pan the canvas
+        const dx = event.clientX - this.lastPanPosition.x;
+        const dy = event.clientY - this.lastPanPosition.y;
+        this.translation.x += dx;
+        this.translation.y += dy;
+        this.lastPanPosition = { x: event.clientX, y: event.clientY };
+      }
+    }
+  
+    handleMouseUp(event: MouseEvent) {
+      if (event.button === 1) {
+        // middle mouse button released
+        this.isPanning = false;
+      }
+    }
   }
+
+var currentCanvas: SketchCanvas = new SketchCanvas(800,600)
+
+function mainLoop() {
+    requestAnimationFrame(mainLoop);
+    ctx?.fillRect(-currentCanvas.width/2 + currentCanvas.translation.x, -currentCanvas.height/2 + currentCanvas.translation.y,currentCanvas.width,currentCanvas.height);
 }
+mainLoop()
