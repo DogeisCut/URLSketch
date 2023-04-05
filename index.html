@@ -2,7 +2,6 @@
 <html>
     <head>
         <title>URLSketch | unnamed.urlsk*</title>
-        <script src="build/main.js"></script>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -131,7 +130,7 @@
                 <!--this selector will be populated with all avaible tools-->
             </select>
         </div>
-        <canvas class="paint-canvas" width=1920 height=1080>
+        <canvas class="paint-canvas" width=1920 height=1080 id="paint-canvas">
         </canvas>
         <div class="window" style="width: 400px; height: 300px;">
             <div class="window-header">
@@ -153,5 +152,6 @@
 
             </div>
           </div>
+          <script src="build/main.js"></script>
     </body>
 </html>

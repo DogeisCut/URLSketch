@@ -1,5 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const windowEl = document.querySelectorAll('.window-header') as NodeListOf<HTMLElement>;
+const canvas = <HTMLCanvasElement> document.getElementById("paint-canvas");
+const ctx = canvas.getContext("2d");
+
+const windowEl = document.querySelectorAll('.window-header') as NodeListOf<HTMLElement>;
 
   let isDragging = false;
   let currentX: number;
@@ -49,12 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 
-  function setTranslate(xPos: number, yPos: number, el: HTMLElement) {
-      el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-  }
-});
-
-const canvas = 
+function setTranslate(xPos: number, yPos: number, el: HTMLElement) {
+    el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+}
 
 class SketchCanvas {
     width: number;
