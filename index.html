@@ -1,157 +1,145 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>URLSketch | unnamed.urlsk*</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div class="top-bar top-bar-row1">
-            <!--Top bar 1, for the main dropdowns-->
-            <div class="standard-button dropdown">
-                <button class="dropdown-toggle file-button">File</button>
-                <div class="dropdown-menu">
-                  <button class="dropdown-item open-file-button">Open</button>
-                  <button class="dropdown-item save-file-button">Save</button>
-                  <button class="dropdown-item file-button-close">Close</button>
-                </div>
-              </div>
-              
-              <div class="dropdown">
-                <button class="dropdown-toggle edit-button">Edit</button>
-                <div class="dropdown-menu">
-                  <button class="dropdown-item undo-button">Undo</button>
-                  <button class="dropdown-item redo-button">Redo</button>
-                  <button class="dropdown-item cut-selection-button">Cut</button>
-                  <button class="dropdown-item copy-selection-button">Copy</button>
-                  <button class="dropdown-item paste-button">Paste</button>
-                </div>   
-              </div>
-              
-              <div class="dropdown">
-                <button class="dropdown-toggle view-button">View</button>
-                <div class="dropdown-menu">
-                  <button class="dropdown-item view-button-zoom-in">Zoom In</button>
-                  <button class="dropdown-item view-button-zoom-out">Zoom Out</button>
-                  <button class="dropdown-item view-button-fit-to-screen">Fit to Screen</button>
-                </div>
-              </div>
-              
-              <div class="dropdown">
-                <button class="dropdown-toggle edit-image-button">Image</button>
-                <div class="dropdown-menu">
-                  <button class="dropdown-item image-button-resize">Resize</button>
-                  <button class="dropdown-item image-button-crop">Crop</button>
-                  <button class="dropdown-item image-button-rotate">Rotate</button>
-                </div>
-              </div>
-              
-              <div class="dropdown">
-                <button class="dropdown-toggle layers-button">Layers</button>
-                <div class="dropdown-menu">
-                  <button class="dropdown-item layers-button-add-layer">Add Layer</button>
-                  <button class="dropdown-item layers-button-delete-layer">Delete Layer</button>
-                  <button class="dropdown-item layers-button-merge-layers">Merge Layers</button>
-                </div>
-              </div>
-              
-              <div class="dropdown">
-                <button class="dropdown-toggle">Adjustments</button>
-                <div class="dropdown-menu">
-                  <button class="dropdown-item adjustments-button-brightness">Brightness</button>
-                  <button class="dropdown-item adjustments-button-constrast">Contrast</button>
-                  <button class="dropdown-item adjustments-button-saturation">Saturation</button>
-                </div>
-              </div>
-              
-              <div class="dropdown">
-                <button class="dropdown-toggle effects-button">Effects</button>
-                <div class="dropdown-menu">
-                  <button class="dropdown-item effects-button-blur">Blur</button>
-                  <button class="dropdown-item effects-button-sharpen">Sharpen</button>
-                  <button class="dropdown-item effects-button-emboss">Emboss</button>
-                  <button class="dropdown-item effects-button-sepia">Sepia</button>
-                </div>
-              </div>
-            <div class="left-side">
-                <button class="image-button tools-menu-button">
-                    <img src="assets/tools-menu-button.png" alt="Tools Menu" title="Tools Menu" width=24>
-                </button>
-                <button class="image-button colors-menu-button">
-                    <img src="assets/colors-menu-button.png" alt="Colors Menu" title="Colors Menu" width=24>
-                </button>
-                <button class="image-button history-menu-button">
-                    <img src="assets/history-menu-button.png" alt="History Menu" title="History Menu" width=24>
-                </button>
-                <button class="image-button layers-menu-button">
-                    <img src="assets/layers-menu-button.png" alt="Layers Menu" title="Layers Menu" width=24>
-                </button>
-            </div>
+  <head>
+    <title>URLSketch | unnamed.urlsk*</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="top-bar top-bar-row1">
+      <!--Top bar 1, for the main dropdowns-->
+      <div class="standard-button dropdown">
+        <button class="dropdown-toggle file-button">File</button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item open-file-button">Open</button>
+          <button class="dropdown-item save-file-button">Save</button>
+          <button class="dropdown-item file-button-close">Close</button>
         </div>
-        <div class="top-bar top-bar-row2">
-            <!--Top bar 2, for utilities and quick controls-->
-            <button class="image-button new-file-button new-file-button">
-                <img src="assets/new-file-button.png" alt="New File" title="New File" width=24>
-            </button>
-            <button class="image-button new-file-button open-file-button">
-                <img src="assets/open-file-button.png" alt="Open File" title="Open File" width=24>
-            </button>
-            <button class="image-button new-file-button save-file-button">
-                <img src="assets/save-file-button.png" alt="Save File" title="Save File" width=24>
-            </button>
-
-            <div class="v-separator"></div>
-
-            <button class="image-button new-file-button cut-selection-button">
-                <img src="assets/cut-selection-button.png" alt="Cut Selection" title="Cut Selection" width=24>
-            </button>
-            <button class="image-button new-file-button copy-selection-button">
-                <img src="assets/copy-selection-button.png" alt="Copy Selection" title="Copy Selection" width=24>
-            </button>
-            <button class="image-button new-file-button paste-button">
-                <img src="assets/paste-button.png" alt="Paste" title="Paste" width=24>
-            </button>
-            <button class="image-button new-file-button deselect-button">
-                <img src="assets/deselect-button.png" alt="Deselect" title="Deselect" width=24>
-            </button>
-
-            <div class="v-separator"></div>
-
-            <button class="image-button new-file-button undo-button">
-                <img src="assets/undo-button.png" alt="Undo" title="Undo" width=24>
-            </button>
-            <button class="image-button new-file-button redo-button">
-                <img src="assets/redo-button.png" alt="Redo" title="Redo" width=24>
-            </button>
+      </div>
+      <div class="dropdown">
+        <button class="dropdown-toggle edit-button">Edit</button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item undo-button">Undo</button>
+          <button class="dropdown-item redo-button">Redo</button>
+          <button class="dropdown-item cut-selection-button">Cut</button>
+          <button class="dropdown-item copy-selection-button">Copy</button>
+          <button class="dropdown-item paste-button">Paste</button>
         </div>
-        <div class="top-bar top-bar-row3">
-            <!--Top bar 3, for tool specific settings, for now, it will be an empty dropdown as the javascript will fill this in based on the tool-->
-            <label>Tool:</label>
-            <select>
-                <!--this selector will be populated with all avaible tools-->
-            </select>
+      </div>
+      <div class="dropdown">
+        <button class="dropdown-toggle view-button">View</button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item view-button-zoom-in">Zoom In</button>
+          <button class="dropdown-item view-button-zoom-out">Zoom Out</button>
+          <button class="dropdown-item view-button-fit-to-screen">Fit to Screen</button>
         </div>
-        <canvas class="paint-canvas" width=1920 height=1080 id="paint-canvas">
-        </canvas>
-        <div class="window" style="width: 400px; height: 300px;">
-            <div class="window-header">
-              <span class="window-title">Colors</span>
-              <button class="window-close">X</button>
-            </div>
-            <div class="window-content">
-                <div class="color-wheel"></div>
-                <div class="value-slider"></div>
-            </div>
-          </div>
-
-          <div class="window" style="width: 150px; height: 450px;">
-            <div class="window-header">
-              <span class="window-title">Tools</span>
-              <button class="window-close">X</button>
-            </div>
-            <div class="window-content">
-
-            </div>
-          </div>
-          <script src="src/main.js"></script>
-    </body>
+      </div>
+      <div class="dropdown">
+        <button class="dropdown-toggle edit-image-button">Image</button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item image-button-resize">Resize</button>
+          <button class="dropdown-item image-button-crop">Crop</button>
+          <button class="dropdown-item image-button-rotate">Rotate</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropdown-toggle layers-button">Layers</button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item layers-button-add-layer">Add Layer</button>
+          <button class="dropdown-item layers-button-delete-layer">Delete Layer</button>
+          <button class="dropdown-item layers-button-merge-layers">Merge Layers</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropdown-toggle">Adjustments</button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item adjustments-button-brightness">Brightness</button>
+          <button class="dropdown-item adjustments-button-constrast">Contrast</button>
+          <button class="dropdown-item adjustments-button-saturation">Saturation</button>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropdown-toggle effects-button">Effects</button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item effects-button-blur">Blur</button>
+          <button class="dropdown-item effects-button-sharpen">Sharpen</button>
+          <button class="dropdown-item effects-button-emboss">Emboss</button>
+          <button class="dropdown-item effects-button-sepia">Sepia</button>
+        </div>
+      </div>
+      <div class="left-side">
+        <button class="image-button tools-menu-button">
+          <img src="assets/tools-menu-button.png" alt="Tools Menu" title="Tools Menu" width=24>
+        </button>
+        <button class="image-button colors-menu-button">
+          <img src="assets/colors-menu-button.png" alt="Colors Menu" title="Colors Menu" width=24>
+        </button>
+        <button class="image-button history-menu-button">
+          <img src="assets/history-menu-button.png" alt="History Menu" title="History Menu" width=24>
+        </button>
+        <button class="image-button layers-menu-button">
+          <img src="assets/layers-menu-button.png" alt="Layers Menu" title="Layers Menu" width=24>
+        </button>
+      </div>
+    </div>
+    <div class="top-bar top-bar-row2">
+      <!--Top bar 2, for utilities and quick controls-->
+      <button class="image-button new-file-button new-file-button">
+        <img src="assets/new-file-button.png" alt="New File" title="New File" width=24>
+      </button>
+      <button class="image-button new-file-button open-file-button">
+        <img src="assets/open-file-button.png" alt="Open File" title="Open File" width=24>
+      </button>
+      <button class="image-button new-file-button save-file-button">
+        <img src="assets/save-file-button.png" alt="Save File" title="Save File" width=24>
+      </button>
+      <div class="v-separator"></div>
+      <button class="image-button new-file-button cut-selection-button">
+        <img src="assets/cut-selection-button.png" alt="Cut Selection" title="Cut Selection" width=24>
+      </button>
+      <button class="image-button new-file-button copy-selection-button">
+        <img src="assets/copy-selection-button.png" alt="Copy Selection" title="Copy Selection" width=24>
+      </button>
+      <button class="image-button new-file-button paste-button">
+        <img src="assets/paste-button.png" alt="Paste" title="Paste" width=24>
+      </button>
+      <button class="image-button new-file-button deselect-button">
+        <img src="assets/deselect-button.png" alt="Deselect" title="Deselect" width=24>
+      </button>
+      <div class="v-separator"></div>
+      <button class="image-button new-file-button undo-button">
+        <img src="assets/undo-button.png" alt="Undo" title="Undo" width=24>
+      </button>
+      <button class="image-button new-file-button redo-button">
+        <img src="assets/redo-button.png" alt="Redo" title="Redo" width=24>
+      </button>
+    </div>
+    <div class="top-bar top-bar-row3">
+      <!--Top bar 3, for tool specific settings, for now, it will be an empty dropdown as the javascript will fill this in based on the tool-->
+      <label>Tool:</label>
+      <select>
+        <!--this selector will be populated with all avaible tools-->
+      </select>
+    </div>
+    <canvas class="paint-canvas" width=1920 height=1080 id="paint-canvas"></canvas>
+    <div class="window-layer">
+      <div class="window" style="width: 400px; height: 300px;">
+        <div class="window-header">
+          <span class="window-title">Colors</span>
+          <button class="window-close">X</button>
+        </div>
+        <div class="window-content">
+          <div class="color-wheel"></div>
+          <div class="value-slider"></div>
+        </div>
+      </div>
+      <div class="window" style="width: 150px; height: 450px;">
+        <div class="window-header">
+          <span class="window-title">Tools</span>
+          <button class="window-close">X</button>
+        </div>
+        <div class="window-content"></div>
+      </div>
+    </div>
+    <script src="src/main.js"></script>
+  </body>
 </html>
