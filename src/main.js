@@ -141,17 +141,38 @@ class SketchCanvas {
             x: (mousePos.x/this.zoom.x)+this.translation.x,
             y: (mousePos.y/this.zoom.y)+this.translation.y
         };
-        //this.translation.x = mousePosSketchCanvas.x
-        //this.translation.y = mousePosSketchCanvas.y
         this.zoom.x += zoomFactor;
         this.zoom.y += zoomFactor;
         this.zoom.x = Math.max(0.1, Math.min(this.zoom.x, 10)); // limit zoom to 10x and 0.1x
         this.zoom.y = Math.max(0.1, Math.min(this.zoom.y, 10));
+        this.translation.x -= this.getClosestPointInCanvas(mousePos,false).x*zoomFactor
+        this.translation.y -= this.getClosestPointInCanvas(mousePos,false).y*zoomFactor
 
         console.log(this.width, this.height, this.translation, this.zoom);
     }
     
-    
+    getClosestPointInCanvas(point, convertBack = false) {
+        // Convert the point to SketchCanvas coordinates
+        const canvasX = (point.x - this.translation.x) / this.zoom.x;
+        const canvasY = (point.y - this.translation.y) / this.zoom.y;
+      
+        // Find the closest point inside the SketchCanvas
+        const closestX = Math.max(0, Math.min(canvasX, this.width));
+        const closestY = Math.max(0, Math.min(canvasY, this.height));
+      
+        if (convertBack) {
+          // Convert the closest point back to screen coordinates
+          const screenX = closestX * this.zoom.x + this.translation.x;
+          const screenY = closestY * this.zoom.y + this.translation.y;
+      
+          return { x: screenX, y: screenY };
+        } else {
+          const screenX = closestX;
+          const screenY = closestY;
+          return { x: screenX, y: screenY };
+        }
+      }      
+      
 
     drawCanvasWithBorders() {
         //Borders 
