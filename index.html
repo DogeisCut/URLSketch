@@ -120,24 +120,45 @@
         <!--this selector will be populated with all avaible tools-->
       </select>
     </div>
-    <canvas class="paint-canvas" width=1920 height=1080 id="paint-canvas"></canvas>
-    <div class="window-layer">
-      <div class="window" style="width: 400px; height: 300px;">
-        <div class="window-header">
-          <span class="window-title">Colors</span>
-          <button class="window-close">X</button>
+    <div class="paint-canvas-layer">
+      <canvas class="paint-canvas" width=1920 height=1080 id="paint-canvas"></canvas>
+      <div class="window-layer">
+
+        <div class="window window-bottom-left" style="width: 400px; height: 300px;" offset-x="0" offset-y="0">
+          <div class="window-header">
+            <span class="window-title">Colors</span>
+            <button class="window-close">X</button>
+          </div>
+          <div class="window-content">
+            <div class="color-wheel"></div>
+            <div class="value-slider"></div>
+          </div>
         </div>
-        <div class="window-content">
-          <div class="color-wheel"></div>
-          <div class="value-slider"></div>
+
+        <div class="window window-top-left" style="width: 150px; height: 450px;" offset-x="0" offset-y="0">
+          <div class="window-header">
+            <span class="window-title">Tools</span>
+            <button class="window-close">X</button>
+          </div>
+          <div class="window-content"></div>
         </div>
-      </div>
-      <div class="window" style="width: 150px; height: 450px;">
-        <div class="window-header">
-          <span class="window-title">Tools</span>
-          <button class="window-close">X</button>
+
+        <div class="window window-top-right" style="width: 200px; height: 200px;" offset-x="0" offset-y="0">
+          <div class="window-header">
+            <span class="window-title">History</span>
+            <button class="window-close">X</button>
+          </div>
+          <div class="window-content"></div>
         </div>
-        <div class="window-content"></div>
+
+        <div class="window window-bottom-right" style="width: 300px; height: 400px;" offset-x="0" offset-y="0">
+          <div class="window-header">
+            <span class="window-title">Layers</span>
+            <button class="window-close">X</button>
+          </div>
+          <div class="window-content"></div>
+        </div>
+
       </div>
     </div>
     <script src="src/main.js"></script>

@@ -1,18 +1,29 @@
 const canvas = document.getElementById("paint-canvas");
 const ctx = canvas.getContext("2d");
 
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight-74;
+  }
+  
+  // Call the resizeCanvas function initially and on window resize
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
 const fakeWindows = document.querySelectorAll('.window-header');
 
 fakeWindows.forEach(element => {
 
     let isDragging = false;
-    let currentX;
-    let currentY;
+    let currentX = element.parentElement.getAttribute('offset-x');
+    let currentY = element.parentElement.getAttribute('offset-y');
     let initialX;
     let initialY;
     let xOffset = 0;
     let yOffset = 0;
     let hasInitialMouseDown = false;
+
+    setTranslate(currentX, currentY, element.parentElement);
 
     element.addEventListener('mousedown', (event) => {
         if (!hasInitialMouseDown) {
@@ -67,6 +78,10 @@ class SketchCanvas {
             x: (canvas.width / 2) - this.width / 2,
             y: (canvas.height / 2) - this.height / 2
         };
+        this.zoom = {
+            x: 1,
+            y: 1
+        }
         this.isPanning = false;
         this.lastPanPosition = {
             x: 0,
@@ -78,6 +93,7 @@ class SketchCanvas {
         canvas.addEventListener("mousemove", this.handleMouseMove.bind(this));
         canvas.addEventListener("mouseup", this.handleMouseUp.bind(this));
         canvas.addEventListener("mouseleave", this.handleMouseUp.bind(this));
+        canvas.addEventListener("wheel", this.handleWheel.bind(this));
     }
 
     handleMouseDown(event) {
@@ -89,6 +105,7 @@ class SketchCanvas {
                 y: event.clientY
             };
         }
+    
     }
 
     handleMouseMove(event) {
@@ -111,6 +128,72 @@ class SketchCanvas {
             this.isPanning = false;
         }
     }
+
+    handleWheel(event) {
+        // zoom the canvas
+        event.preventDefault();
+        const zoomFactor = -event.deltaY/1000;
+        const mousePos = {
+            x: event.clientX - canvas.getBoundingClientRect().left,
+            y: event.clientY - canvas.getBoundingClientRect().top
+        };
+        const mousePosSketchCanvas = {
+            x: (mousePos.x/this.zoom.x)+this.translation.x,
+            y: (mousePos.y/this.zoom.y)+this.translation.y
+        };
+        //this.translation.x = mousePosSketchCanvas.x
+        //this.translation.y = mousePosSketchCanvas.y
+        this.zoom.x += zoomFactor;
+        this.zoom.y += zoomFactor;
+        this.zoom.x = Math.max(0.1, Math.min(this.zoom.x, 10)); // limit zoom to 10x and 0.1x
+        this.zoom.y = Math.max(0.1, Math.min(this.zoom.y, 10));
+
+        console.log(this.width, this.height, this.translation, this.zoom);
+    }
+    
+    
+
+    drawCanvasWithBorders() {
+        //Borders 
+        ctx.fillStyle = '#303030';
+        ctx.strokeStyle = "#00000000"
+        ctx.lineWidth = 0;
+        //Left
+        ctx.beginPath();
+        ctx.moveTo(0 + this.translation.x, 0);
+        ctx.lineTo(0 + this.translation.x, canvas.height);
+        ctx.lineTo(0, canvas.height);
+        ctx.lineTo(0, 0);
+        ctx.fill();
+        //Right
+        ctx.beginPath();
+        ctx.moveTo((this.width*this.zoom.x) + this.translation.x, 0);
+        ctx.lineTo((this.width*this.zoom.x) + this.translation.x, canvas.height);
+        ctx.lineTo(canvas.width, canvas.height);
+        ctx.lineTo(canvas.width, 0);
+        ctx.fill();
+        //Bottom
+        ctx.beginPath();
+        ctx.moveTo(canvas.width, canvas.height);
+        ctx.lineTo(0, canvas.height);
+        ctx.lineTo(0, (this.height*this.zoom.x) + this.translation.y);
+        ctx.lineTo(canvas.width, (this.height*this.zoom.y) + this.translation.y);
+        ctx.fill();
+        //Top
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(canvas.width, 0);
+        ctx.lineTo(canvas.width, 0 + this.translation.y);
+        ctx.lineTo(0, 0 + this.translation.y);
+        ctx.fill();
+
+        //Canvas Border
+        ctx.strokeStyle = "#636363"
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.rect(this.translation.x, this.translation.y, (this.width*this.zoom.x), (this.height*this.zoom.y));
+        ctx.stroke()
+    }
 }
 
 var currentSketchCanvas = new SketchCanvas(800, 600);
@@ -119,45 +202,7 @@ function draw() {
     requestAnimationFrame(draw);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    //Borders 
-    ctx.fillStyle = '#303030';
-    ctx.strokeStyle = "#00000000"
-    ctx.lineWidth = 0;
-    //Left
-    ctx.beginPath();
-    ctx.moveTo(0 + currentSketchCanvas.translation.x, 0);
-    ctx.lineTo(0 + currentSketchCanvas.translation.x, canvas.height);
-    ctx.lineTo(0, canvas.height);
-    ctx.lineTo(0, 0);
-    ctx.fill();
-    //Right
-    ctx.beginPath();
-    ctx.moveTo(currentSketchCanvas.width + currentSketchCanvas.translation.x, 0);
-    ctx.lineTo(currentSketchCanvas.width + currentSketchCanvas.translation.x, canvas.height);
-    ctx.lineTo(canvas.width, canvas.height);
-    ctx.lineTo(canvas.width, 0);
-    ctx.fill();
-    //Bottom
-    ctx.beginPath();
-    ctx.moveTo(canvas.width, canvas.height);
-    ctx.lineTo(0, canvas.height);
-    ctx.lineTo(0, currentSketchCanvas.height + currentSketchCanvas.translation.y);
-    ctx.lineTo(canvas.width, currentSketchCanvas.height + currentSketchCanvas.translation.y);
-    ctx.fill();
-    //Top
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(canvas.width, 0);
-    ctx.lineTo(canvas.width, 0 + currentSketchCanvas.translation.y);
-    ctx.lineTo(0, 0 + currentSketchCanvas.translation.y);
-    ctx.fill();
-
-    //Canvas Border
-    ctx.strokeStyle = "#636363"
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.rect(currentSketchCanvas.translation.x, currentSketchCanvas.translation.y, currentSketchCanvas.width, currentSketchCanvas.height);
-    ctx.stroke()
+    currentSketchCanvas.drawCanvasWithBorders();
 
 
 }
