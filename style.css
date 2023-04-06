@@ -11,69 +11,6 @@ body {
   display: flex;
   align-items: center;
 }
-.top-bar button {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  margin-right: 16px;
-}
-button:hover {
-  background-color: #ff000077;
-  outline-color: #ff0000;
-  outline-style: auto;
-  outline-width: 2px;
-}
-.top-bar .dropdown {
-  position: relative;
-}
-.top-bar .dropdown-toggle::after {
-  content: "\25BC";
-  margin-left: 5px;
-  font-size: 8px;
-}
-.top-bar .dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: none;
-  background-color: #1C1C1C;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-.top-bar .dropdown:hover .dropdown-menu {
-  display: block;
-}
-.top-bar .dropdown-item {
-  display: flex;
-  width: 100%;
-  padding: 8px 16px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-.top-bar .image-button {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  margin: 0;
-  padding: 0px 3px;
-  cursor: pointer;
-}
-.top-bar .left-side {
-  margin-right: 0;
-  margin-left: auto;
-  white-space: nowrap;
-}
-.top-bar .v-separator {
-  height: 20px;
-  width: 1px;
-  background-color: #e0e0e0;
-  margin-left: 0;
-  margin-right: 5px;
-}
 /* Top bar row 1 style */
 .top-bar-row1 {
   background-color: black;
@@ -90,6 +27,42 @@ button:hover {
   color: #fff;
   font-size: 18px;
   font-weight: bold;
+}
+/* Main styles */
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 16px;
+}
+button:hover {
+  background-color: #ff000077;
+  outline-color: #ff0000;
+  outline-style: auto;
+  outline-width: 2px;
+}
+.image-button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0px 3px;
+  cursor: pointer;
+}
+.left-side {
+  margin-right: 0;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.v-separator {
+  height: 20px;
+  width: 1px;
+  background-color: #e0e0e0;
+  margin-left: 0;
+  margin-right: 5px;
 }
 /* Selector styles */
 select {
@@ -127,8 +100,10 @@ select option {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 .dropdown-item {
-  display: block;
+  display: flex;
   font-size: 16px;
+  width: 100%;
+  padding: 8px 16px;
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -138,6 +113,14 @@ select option {
   outline-color: #ff0000;
   outline-style: auto;
   outline-width: 2px;
+}
+.dropdown-toggle::after {
+  content: "\25BC";
+  margin-left: 5px;
+  font-size: 8px;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 /* Fake windows */
 .window {

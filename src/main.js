@@ -1,9 +1,9 @@
 const canvas = document.getElementById("paint-canvas");
 const ctx = canvas.getContext("2d");
 
-const windowEl = document.querySelectorAll('.window-header');
+const fakeWindows = document.querySelectorAll('.window-header');
 
-windowEl.forEach(element => {
+fakeWindows.forEach(element => {
 
     let isDragging = false;
     let currentX;
@@ -16,7 +16,6 @@ windowEl.forEach(element => {
 
     element.addEventListener('mousedown', (event) => {
         if (!hasInitialMouseDown) {
-            console.log("clicked window");
             initialX = event.clientX - xOffset;
             initialY = event.clientY - yOffset;
 
@@ -26,6 +25,11 @@ windowEl.forEach(element => {
 
             hasInitialMouseDown = true;
         }
+    });
+
+    element.parentElement.addEventListener('mousedown', (event) => {
+        const mainParent = document.querySelector('.window-layer');
+        mainParent.appendChild(element.parentElement);
     });
 
     document.addEventListener('mouseup', () => {
