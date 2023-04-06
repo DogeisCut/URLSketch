@@ -3,6 +3,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/dogeiscut?style=social)](https://twitter.com/dogeiscut)
 [![GitHub stars](https://img.shields.io/github/stars/dogeiscut/URLSketch?style=social)](https://github.com/dogeiscut/URLSketch/stargazers)
 [![GitHub license](https://img.shields.io/github/license/dogeiscut/URLSketch)](https://github.com/dogeiscut/URLSketch/blob/master/LICENSE)
+[![Carrd Page](https://img.shields.io/badge/Carrd%20Page-Visit%20site-pink)](https://dogeiscut.carrd.co/)
 
 URLSketch is a drawing and sketching web app where all the image data is stored in the browser URL. It does this by storing every action in a compressed URL string. This means undo history is also saved. 
 
@@ -12,6 +13,14 @@ URLSketch is a drawing and sketching web app where all the image data is stored 
 - Store image data in the URL
 - Undo/redo history
 - Lightweight and fast
+
+## Planned Features
+
+- Tools (Such as magic wand, selection, paint, etc)
+- Color selector and pallete saving
+- Brushes
+- Effects
+- And more!
 
 ## Contributing
 
