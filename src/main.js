@@ -74,6 +74,10 @@ class SketchCanvas {
     constructor(width, height) {
         this.width = width;
         this.height = height;
+        this.canvas = document.createElement('canvas'); // create a new canvas element
+        this.canvas.width = width;
+        this.canvas.height = height;
+        this.ctx = this.canvas.getContext('2d');
         this.translation = {
             x: (canvas.width / 2) - this.width / 2,
             y: (canvas.height / 2) - this.height / 2
@@ -147,8 +151,6 @@ class SketchCanvas {
         this.zoom.y = Math.max(0.1, Math.min(this.zoom.y, 10));
         this.translation.x -= this.getClosestPointInCanvas(mousePos,false).x*zoomFactor
         this.translation.y -= this.getClosestPointInCanvas(mousePos,false).y*zoomFactor
-
-        console.log(this.width, this.height, this.translation, this.zoom);
     }
     
     getClosestPointInCanvas(point, convertBack = false) {
@@ -172,6 +174,17 @@ class SketchCanvas {
           return { x: screenX, y: screenY };
         }
       }      
+
+    initHiddenCanvas() {
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height)
+        this.ctx.strokeStyle = "black"
+        this.ctx.lineWidth = 50;
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, 0);
+        this.ctx.lineTo(this.canvas.width,this.canvas.height);
+        this.ctx.stroke();
+    }
       
 
     drawCanvasWithBorders() {
@@ -208,6 +221,11 @@ class SketchCanvas {
         ctx.lineTo(0, 0 + this.translation.y);
         ctx.fill();
 
+
+        //Canvas :)
+        ctx.drawImage(this.canvas, this.translation.x, this.translation.y, (this.width*this.zoom.x), (this.height*this.zoom.y))
+
+
         //Canvas Border
         ctx.strokeStyle = "#636363"
         ctx.lineWidth = 1;
@@ -227,4 +245,5 @@ function draw() {
 
 
 }
+currentSketchCanvas.initHiddenCanvas();
 draw();
