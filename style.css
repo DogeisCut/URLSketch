@@ -206,6 +206,7 @@ select option {
 }
 /* Canvas */
 .paint-canvas {
+  image-rendering: pixelated;
   display:block;
   margin:0;
   padding:0;

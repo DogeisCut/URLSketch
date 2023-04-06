@@ -136,46 +136,31 @@ class SketchCanvas {
     handleWheel(event) {
         // zoom the canvas
         event.preventDefault();
-        const zoomFactor = -event.deltaY/1000;
+        const zoomFactor = (-event.deltaY/1000)*this.zoom.x;
         const mousePos = {
             x: event.clientX - canvas.getBoundingClientRect().left,
             y: event.clientY - canvas.getBoundingClientRect().top
         };
         const mousePosSketchCanvas = {
-            x: (mousePos.x/this.zoom.x)+this.translation.x,
-            y: (mousePos.y/this.zoom.y)+this.translation.y
+            x: (mousePos.x-this.translation.x) / this.zoom.x,
+            y: (mousePos.y-this.translation.y) / this.zoom.y
         };
-        this.zoom.x += zoomFactor;
-        this.zoom.y += zoomFactor;
-        this.zoom.x = Math.max(0.1, Math.min(this.zoom.x, 10)); // limit zoom to 10x and 0.1x
-        this.zoom.y = Math.max(0.1, Math.min(this.zoom.y, 10));
-        this.translation.x -= this.getClosestPointInCanvas(mousePos,false).x*zoomFactor
-        this.translation.y -= this.getClosestPointInCanvas(mousePos,false).y*zoomFactor
-    }
-    
-    getClosestPointInCanvas(point, convertBack = false) {
-        // Convert the point to SketchCanvas coordinates
-        const canvasX = (point.x - this.translation.x) / this.zoom.x;
-        const canvasY = (point.y - this.translation.y) / this.zoom.y;
-      
-        // Find the closest point inside the SketchCanvas
-        const closestX = Math.max(0, Math.min(canvasX, this.width));
-        const closestY = Math.max(0, Math.min(canvasY, this.height));
-      
-        if (convertBack) {
-          // Convert the closest point back to screen coordinates
-          const screenX = closestX * this.zoom.x + this.translation.x;
-          const screenY = closestY * this.zoom.y + this.translation.y;
-      
-          return { x: screenX, y: screenY };
-        } else {
-          const screenX = closestX;
-          const screenY = closestY;
-          return { x: screenX, y: screenY };
+        console.log(mousePosSketchCanvas);
+        const newZoomX = Math.max(0.05, Math.min(this.zoom.x + zoomFactor, 100));
+        const newZoomY = Math.max(0.05, Math.min(this.zoom.y + zoomFactor, 100));
+        const zoomDiffX = newZoomX - this.zoom.x;
+        const zoomDiffY = newZoomY - this.zoom.y;
+        this.zoom.x = newZoomX;
+        this.zoom.y = newZoomY;
+        if (zoomDiffX !== 0 && zoomDiffY !== 0) {
+            this.translation.x -= mousePosSketchCanvas.x * zoomDiffX;
+            this.translation.y -= mousePosSketchCanvas.y * zoomDiffY;
         }
-      }      
+    }
 
     initHiddenCanvas() {
+        this.canvas.style.imageRendering = 'pixelated'
+        this.ctx.imageSmoothingEnabled = false;
         this.ctx.fillStyle = 'white';
         this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height)
         this.ctx.strokeStyle = "black"
@@ -184,10 +169,20 @@ class SketchCanvas {
         this.ctx.moveTo(0, 0);
         this.ctx.lineTo(this.canvas.width,this.canvas.height);
         this.ctx.stroke();
+
+        this.ctx.globalCompositeOperation = "destination-out";
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.canvas.width, 0);
+        this.ctx.lineTo(0,this.canvas.height);
+        this.ctx.stroke();
+
+        this.ctx.globalCompositeOperation = "source-over";
     }
       
 
     drawCanvasWithBorders() {
+        ctx.imageSmoothingEnabled = false;
+
         //Borders 
         ctx.fillStyle = '#303030';
         ctx.strokeStyle = "#00000000"
