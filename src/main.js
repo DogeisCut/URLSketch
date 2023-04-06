@@ -146,8 +146,8 @@ class SketchCanvas {
             y: (mousePos.y-this.translation.y) / this.zoom.y
         };
         console.log(mousePosSketchCanvas);
-        const newZoomX = Math.max(0.05, Math.min(this.zoom.x + zoomFactor, 100));
-        const newZoomY = Math.max(0.05, Math.min(this.zoom.y + zoomFactor, 100));
+        const newZoomX = Math.max(0.01, Math.min(this.zoom.x + zoomFactor, 1000));
+        const newZoomY = Math.max(0.01, Math.min(this.zoom.y + zoomFactor, 1000));
         const zoomDiffX = newZoomX - this.zoom.x;
         const zoomDiffY = newZoomY - this.zoom.y;
         this.zoom.x = newZoomX;
