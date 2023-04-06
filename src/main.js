@@ -123,6 +123,7 @@ class SketchCanvas {
                 x: event.clientX,
                 y: event.clientY
             };
+            this.saveCanvasState()
         }
     }
 
@@ -145,7 +146,6 @@ class SketchCanvas {
             x: (mousePos.x-this.translation.x) / this.zoom.x,
             y: (mousePos.y-this.translation.y) / this.zoom.y
         };
-        console.log(mousePosSketchCanvas);
         const newZoomX = Math.max(0.01, Math.min(this.zoom.x + zoomFactor, 1000));
         const newZoomY = Math.max(0.01, Math.min(this.zoom.y + zoomFactor, 1000));
         const zoomDiffX = newZoomX - this.zoom.x;
@@ -156,7 +156,30 @@ class SketchCanvas {
             this.translation.x -= mousePosSketchCanvas.x * zoomDiffX;
             this.translation.y -= mousePosSketchCanvas.y * zoomDiffY;
         }
+
+        this.saveCanvasState()
     }
+
+    saveCanvasState() {
+        const compressedStr = btoa(JSON.stringify({ zoom: this.zoom, translation: this.translation }));
+        const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${encodeURIComponent(compressedStr)}`;
+        history.pushState(null, null, newUrl);
+    }
+
+    loadCanvasState() {
+        const compressedStr = window.location.search.slice(1);
+        if (compressedStr) {
+          try {
+            const decodedStr = decodeURIComponent(compressedStr);
+            const { zoom, translation } = JSON.parse(atob(decodedStr));
+            this.zoom = zoom;
+            this.translation = translation;
+          } catch (error) {
+            console.error("Error loading canvas state from URL:", error);
+          }
+        }
+      }
+      
 
     initHiddenCanvas() {
         this.canvas.style.imageRendering = 'pixelated'
@@ -177,6 +200,8 @@ class SketchCanvas {
         this.ctx.stroke();
 
         this.ctx.globalCompositeOperation = "source-over";
+
+        this.loadCanvasState();
     }
       
 
