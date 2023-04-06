@@ -28,7 +28,7 @@ Anyone is free to contribute to URLSketch, especially since the project is in it
 
 ## License
 
-URLSketch is released under the [MIT License](https://github.com/dogeiscut/URLSketch/blob/master/LICENSE).
+URLSketch is released under the [GNU GPLv3 License](https://github.com/dogeiscut/URLSketch/blob/master/LICENSE).
 
 ---
 
