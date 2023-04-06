@@ -91,6 +91,35 @@ class SketchCanvas {
             x: 0,
             y: 0
         };
+        this.history = [
+            {
+                brush: {
+                    coords: [
+                        [0.0,0.0],[3.0,0.0],[4.0,8.0]
+                    ],
+                    color: "#000000FF",
+                    size: 5
+                },
+                erase: {
+                    coords: [
+                        [0.0,0.0],[3.0,0.0],[4.0,8.0]
+                    ],
+                    size: 5
+                },
+                paintBucket: {
+                    coord: [0,0],
+                    color: "#000000FF",
+                    tolerance: 50
+                },
+                selection: {
+                    bounds: [[0,0],[100,100]],
+                    type: "ovveride"
+                },
+                moveSelection: {
+                    to: [200,200]
+                }
+            }
+        ]
 
         // add event listeners for panning
         canvas.addEventListener("mousedown", this.handleMouseDown.bind(this));
