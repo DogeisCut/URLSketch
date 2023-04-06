@@ -59,7 +59,7 @@ class SketchCanvas {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.translation = { x: 0, y: 0 };
+        this.translation = { x: (canvas.width/2)-this.width/2, y: (canvas.height/2)-this.height/2 };
         this.isPanning = false;
         this.lastPanPosition = { x: 0, y: 0 };
 
