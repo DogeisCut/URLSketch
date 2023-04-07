@@ -175,7 +175,7 @@ class SketchCanvas {
                 x: event.clientX,
                 y: event.clientY
             };
-            this.saveCanvasState()
+            //this.saveCanvasState()
         }
     }
 
@@ -209,7 +209,7 @@ class SketchCanvas {
             this.translation.y -= mousePosSketchCanvas.y * zoomDiffY;
         }
 
-        this.saveCanvasState()
+        //this.saveCanvasState()
     }
 
     saveCanvasState() {
@@ -253,7 +253,7 @@ class SketchCanvas {
 
         this.ctx.globalCompositeOperation = "source-over";
 
-        this.loadCanvasState();
+        //this.loadCanvasState();
     }
       
 
@@ -315,6 +315,44 @@ let mousePosSketchCanvas = {
     y: (mousePos.y-currentSketchCanvas.translation.y) / currentSketchCanvas.zoom.y
 };
 
+let leftmousedown = false
+
+canvas.addEventListener('mousedown', (event) => {
+    if ("buttons" in event) {
+        if (event.buttons == 1) {
+            leftmousedown = true;
+            brush();
+        }
+    }
+});
+
+canvas.addEventListener('mousemove', (event) => {
+    if (leftmousedown) {
+        brush();
+    }
+});
+
+canvas.addEventListener('mouseup', () => {
+    leftmousedown = false
+});
+
+function brush() {
+    const brushSize = 16
+    const hardness = 50
+
+    currentSketchCanvas.ctx.lineCap = "round";
+    currentSketchCanvas.ctx.strokeStyle = '#ff0000';
+    currentSketchCanvas.ctx.lineWidth = brushSize;
+    currentSketchCanvas.ctx.beginPath()
+    currentSketchCanvas.ctx.moveTo(mousePosSketchCanvas.x, mousePosSketchCanvas.y)
+    mousePosSketchCanvas = {
+        x: (mousePos.x-currentSketchCanvas.translation.x) / currentSketchCanvas.zoom.x,
+        y: (mousePos.y-currentSketchCanvas.translation.y) / currentSketchCanvas.zoom.y
+    };
+    currentSketchCanvas.ctx.lineTo(mousePosSketchCanvas.x, mousePosSketchCanvas.y)
+    currentSketchCanvas.ctx.stroke();
+}
+
 function draw() {
     requestAnimationFrame(draw);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -331,24 +369,6 @@ function draw() {
     ctx.beginPath();
     ctx.arc(mousePos.x, mousePos.y, 8*currentSketchCanvas.zoom.x, 0, 2 * Math.PI);
     ctx.stroke();
-
-    
-
-    currentSketchCanvas.ctx.shadowColor = '#ff0000';
-    currentSketchCanvas.ctx.shadowBlur = 4;
-    currentSketchCanvas.ctx.lineCap = "round";
-    currentSketchCanvas.ctx.strokeStyle = '#ff0000';
-    currentSketchCanvas.ctx.lineWidth = 8;
-    currentSketchCanvas.ctx.beginPath()
-    currentSketchCanvas.ctx.moveTo(mousePosSketchCanvas.x, mousePosSketchCanvas.y)
-    mousePosSketchCanvas = {
-        x: (mousePos.x-currentSketchCanvas.translation.x) / currentSketchCanvas.zoom.x,
-        y: (mousePos.y-currentSketchCanvas.translation.y) / currentSketchCanvas.zoom.y
-    };
-    currentSketchCanvas.ctx.lineTo(mousePosSketchCanvas.x, mousePosSketchCanvas.y)
-    currentSketchCanvas.ctx.stroke();
-
-
 }
 currentSketchCanvas.initHiddenCanvas();
 draw();
