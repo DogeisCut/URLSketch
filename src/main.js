@@ -23,7 +23,6 @@ canvas.addEventListener('mousemove', (event) => {
 
 
 fakeWindows.forEach(element => {
-
     let isDragging = false;
     let currentX = element.parentElement.getAttribute('offset-x');
     let currentY = element.parentElement.getAttribute('offset-y');
@@ -32,90 +31,90 @@ fakeWindows.forEach(element => {
     let xOffset = 0;
     let yOffset = 0;
     let hasInitialMouseDown = false;
-
+  
     setTranslate(currentX, currentY, element.parentElement);
-
+  
     element.addEventListener('mousedown', (event) => {
-        if (!hasInitialMouseDown) {
-            initialX = event.clientX - xOffset;
-            initialY = event.clientY - yOffset;
-
-            if (event.target === element) {
-                isDragging = true;
-            }
-
-            hasInitialMouseDown = true;
+      if (!hasInitialMouseDown) {
+        initialX = event.clientX - xOffset;
+        initialY = event.clientY - yOffset;
+  
+        if (event.target === element) {
+          isDragging = true;
         }
+  
+        hasInitialMouseDown = true;
+      }
     });
-
+  
     element.addEventListener('touchstart', (event) => {
-        if (!hasInitialMouseDown) {
-            initialX = event.clientX - xOffset;
-            initialY = event.clientY - yOffset;
-
-            if (event.target === element) {
-                isDragging = true;
-            }
-
-            hasInitialMouseDown = true;
+      if (!hasInitialMouseDown) {
+        initialX = event.touches[0].clientX - xOffset;
+        initialY = event.touches[0].clientY - yOffset;
+  
+        if (event.target === element) {
+          isDragging = true;
         }
+  
+        hasInitialMouseDown = true;
+      }
     });
-
+  
     element.parentElement.addEventListener('mousedown', (event) => {
-        const mainParent = document.querySelector('.window-layer');
-        mainParent.appendChild(element.parentElement);
+      const mainParent = document.querySelector('.window-layer');
+      mainParent.appendChild(element.parentElement);
     });
-
+  
     element.parentElement.addEventListener('touchstart', (event) => {
-        const mainParent = document.querySelector('.window-layer');
-        mainParent.appendChild(element.parentElement);
+      const mainParent = document.querySelector('.window-layer');
+      mainParent.appendChild(element.parentElement);
     });
-
+  
     document.addEventListener('mouseup', () => {
-        initialX = currentX;
-        initialY = currentY;
-
-        isDragging = false;
-        hasInitialMouseDown = false;
+      initialX = currentX;
+      initialY = currentY;
+  
+      isDragging = false;
+      hasInitialMouseDown = false;
     });
-
+  
     document.addEventListener('touchend', () => {
-        initialX = currentX;
-        initialY = currentY;
-
-        isDragging = false;
-        hasInitialMouseDown = false;
+      initialX = currentX;
+      initialY = currentY;
+  
+      isDragging = false;
+      hasInitialMouseDown = false;
     });
-
+  
     document.addEventListener('mousemove', (event) => {
-        if (isDragging) {
-            event.preventDefault();
-
-            currentX = event.clientX - initialX;
-            currentY = event.clientY - initialY;
-
-            xOffset = currentX;
-            yOffset = currentY;
-
-            setTranslate(currentX, currentY, element.parentElement);
-        }
+      if (isDragging && event.buttons === 1) {
+        event.preventDefault();
+  
+        currentX = event.clientX - initialX;
+        currentY = event.clientY - initialY;
+  
+        xOffset = currentX;
+        yOffset = currentY;
+  
+        setTranslate(currentX, currentY, element.parentElement);
+      }
     });
-
+  
     document.addEventListener('touchmove', (event) => {
-        if (isDragging) {
-            event.preventDefault();
-
-            currentX = event.clientX - initialX;
-            currentY = event.clientY - initialY;
-
-            xOffset = currentX;
-            yOffset = currentY;
-
-            setTranslate(currentX, currentY, element.parentElement);
-        }
+      if (isDragging && event.touches.length === 1) {
+        event.preventDefault();
+  
+        currentX = event.touches[0].clientX - initialX;
+        currentY = event.touches[0].clientY - initialY;
+  
+        xOffset = currentX;
+        yOffset = currentY;
+  
+        setTranslate(currentX, currentY, element.parentElement);
+      }
     });
-});
-
+  });
+  
 function setTranslate(xPos, yPos, el) {
     el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
 }
