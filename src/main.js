@@ -12,6 +12,16 @@ function resizeCanvas() {
 
 const fakeWindows = document.querySelectorAll('.window-header');
 
+let mousePos = {x:0,y:0}
+canvas.addEventListener('mousemove', (event) => {
+     mousePos = {
+        x: event.clientX - canvas.getBoundingClientRect().left,
+        y: event.clientY - canvas.getBoundingClientRect().top
+    };
+});
+
+
+
 fakeWindows.forEach(element => {
 
     let isDragging = false;
@@ -93,7 +103,13 @@ class SketchCanvas {
         };
         this.history = [
             {
+                newImage: {
+                    timeStamp:0,
+                    size: [800,600]
+                },
                 brush: {
+                    timeStamp:0,
+                    layer:0,
                     coords: [
                         [0.0,0.0],[3.0,0.0],[4.0,8.0]
                     ],
@@ -101,21 +117,28 @@ class SketchCanvas {
                     size: 5
                 },
                 erase: {
+                    timeStamp:0,
+                    layer:0,
                     coords: [
                         [0.0,0.0],[3.0,0.0],[4.0,8.0]
                     ],
                     size: 5
                 },
                 paintBucket: {
+                    timeStamp:0,
+                    layer:0,
                     coord: [0,0],
                     color: "#000000FF",
                     tolerance: 50
                 },
                 selection: {
+                    timeStamp:0,
+                    layer:0,
                     bounds: [[0,0],[100,100]],
                     type: "ovveride"
                 },
                 moveSelection: {
+                    timeStamp:0,
                     to: [200,200]
                 }
             }
@@ -240,6 +263,7 @@ class SketchCanvas {
         //Borders 
         ctx.fillStyle = '#303030';
         ctx.strokeStyle = "#00000000"
+        ctx.lineCap = "butt";
         ctx.lineWidth = 0;
         //Left
         ctx.beginPath();
@@ -286,11 +310,43 @@ class SketchCanvas {
 
 var currentSketchCanvas = new SketchCanvas(800, 600);
 
+let mousePosSketchCanvas = {
+    x: (mousePos.x-currentSketchCanvas.translation.x) / currentSketchCanvas.zoom.x,
+    y: (mousePos.y-currentSketchCanvas.translation.y) / currentSketchCanvas.zoom.y
+};
+
 function draw() {
     requestAnimationFrame(draw);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     currentSketchCanvas.drawCanvasWithBorders();
+
+    ctx.strokeStyle = "#ffffff"
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(mousePos.x, mousePos.y, 8*currentSketchCanvas.zoom.x, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.strokeStyle = "#000000"
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(mousePos.x, mousePos.y, 8*currentSketchCanvas.zoom.x, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    
+
+    currentSketchCanvas.ctx.shadowColor = '#ff0000';
+    currentSketchCanvas.ctx.shadowBlur = 4;
+    currentSketchCanvas.ctx.lineCap = "round";
+    currentSketchCanvas.ctx.strokeStyle = '#ff0000';
+    currentSketchCanvas.ctx.lineWidth = 8;
+    currentSketchCanvas.ctx.beginPath()
+    currentSketchCanvas.ctx.moveTo(mousePosSketchCanvas.x, mousePosSketchCanvas.y)
+    mousePosSketchCanvas = {
+        x: (mousePos.x-currentSketchCanvas.translation.x) / currentSketchCanvas.zoom.x,
+        y: (mousePos.y-currentSketchCanvas.translation.y) / currentSketchCanvas.zoom.y
+    };
+    currentSketchCanvas.ctx.lineTo(mousePosSketchCanvas.x, mousePosSketchCanvas.y)
+    currentSketchCanvas.ctx.stroke();
 
 
 }
