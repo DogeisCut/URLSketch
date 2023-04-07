@@ -48,7 +48,25 @@ fakeWindows.forEach(element => {
         }
     });
 
+    element.addEventListener('touchstart', (event) => {
+        if (!hasInitialMouseDown) {
+            initialX = event.clientX - xOffset;
+            initialY = event.clientY - yOffset;
+
+            if (event.target === element) {
+                isDragging = true;
+            }
+
+            hasInitialMouseDown = true;
+        }
+    });
+
     element.parentElement.addEventListener('mousedown', (event) => {
+        const mainParent = document.querySelector('.window-layer');
+        mainParent.appendChild(element.parentElement);
+    });
+
+    element.parentElement.addEventListener('touchstart', (event) => {
         const mainParent = document.querySelector('.window-layer');
         mainParent.appendChild(element.parentElement);
     });
@@ -61,7 +79,29 @@ fakeWindows.forEach(element => {
         hasInitialMouseDown = false;
     });
 
+    document.addEventListener('touchend', () => {
+        initialX = currentX;
+        initialY = currentY;
+
+        isDragging = false;
+        hasInitialMouseDown = false;
+    });
+
     document.addEventListener('mousemove', (event) => {
+        if (isDragging) {
+            event.preventDefault();
+
+            currentX = event.clientX - initialX;
+            currentY = event.clientY - initialY;
+
+            xOffset = currentX;
+            yOffset = currentY;
+
+            setTranslate(currentX, currentY, element.parentElement);
+        }
+    });
+
+    document.addEventListener('touchmove', (event) => {
         if (isDragging) {
             event.preventDefault();
 
