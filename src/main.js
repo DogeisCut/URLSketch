@@ -372,3 +372,17 @@ function draw() {
 }
 currentSketchCanvas.initHiddenCanvas();
 draw();
+
+
+class Tool {
+    constructor() {
+        this.button = new HTMLButtonElement();
+        this.iconPath = "";
+    }
+}
+
+class Brush extends Tool {
+    constructor() {
+        super()
+    }
+}
