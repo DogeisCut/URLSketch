@@ -375,21 +375,74 @@ canvas.addEventListener('mouseup', () => {
     leftmousedown = false
 });
 
+CanvasRenderingContext2D.prototype.drawLine = function(x1, y1, x2, y2, enableAA = false, brushSize = 1, brushShape = 'square') {
+    // Determine the line direction and slope
+    var dx = Math.abs(x2 - x1);
+    var dy = Math.abs(y2 - y1);
+    var sx = (x1 < x2) ? 1 : -1;
+    var sy = (y1 < y2) ? 1 : -1;
+    var err = dx - dy;
+  
+    // Calculate the supersampling factor (1 for no AA, 2 or higher for AA)
+    var ssFactor = enableAA ? 2 : 1;
+  
+    // Set the brush size and shape
+    var brushWidth = brushSize / ssFactor;
+    var brushHeight = brushSize / ssFactor;
+    var brushShapeFn = brushShape === 'square' ? this.fillRect.bind(this) : this.fillCircle.bind(this);
+  
+    // Draw each supersampled pixel of the line
+    while (true) {
+      // Draw the current supersampled pixel(s)
+      for (var i = 0; i < ssFactor; i++) {
+        for (var j = 0; j < ssFactor; j++) {
+          var ssx = x1 + (i + 0.5) / ssFactor;
+          var ssy = y1 + (j + 0.5) / ssFactor;
+          brushShapeFn(ssx - brushWidth / 2, ssy - brushHeight / 2, brushWidth, brushHeight);
+        }
+      }
+  
+      // If we've reached the end point, exit the loop
+      if (Math.abs(x1 - x2) < 1 && Math.abs(y1 - y2) < 1) {
+        break;
+      }
+  
+      // Calculate the error and advance to the next pixel
+      var e2 = 2 * err;
+      if (e2 > -dy) {
+        err -= dy;
+        x1 += sx;
+      }
+      if (e2 < dx) {
+        err += dx;
+        y1 += sy;
+      }
+    }
+  }
+  
+  // Define a fillCircle() method to draw a circle with the given parameters
+  CanvasRenderingContext2D.prototype.fillCircle = function(x, y, r) {
+    this.beginPath();
+    this.arc(x + r / 2, y + r / 2, r / 2, 0, 2 * Math.PI);
+    this.fill();
+  }
+  
+  
+  
+
 function brush() {
     const brushSize = 16
     const hardness = 50
 
-    currentSketchCanvas.ctx.lineCap = "round";
-    currentSketchCanvas.ctx.strokeStyle = '#ff0000';
-    currentSketchCanvas.ctx.lineWidth = brushSize;
-    currentSketchCanvas.ctx.beginPath()
-    currentSketchCanvas.ctx.moveTo(mousePosSketchCanvas.x, mousePosSketchCanvas.y)
     mousePosSketchCanvas = {
         x: (mousePos.x-currentSketchCanvas.translation.x) / currentSketchCanvas.zoom.x,
         y: (mousePos.y-currentSketchCanvas.translation.y) / currentSketchCanvas.zoom.y
     };
-    currentSketchCanvas.ctx.lineTo(mousePosSketchCanvas.x, mousePosSketchCanvas.y)
-    currentSketchCanvas.ctx.stroke();
+
+    currentSketchCanvas.ctx.lineCap = "round";
+    currentSketchCanvas.ctx.strokeStyle = '#ff0000';
+    currentSketchCanvas.ctx.lineWidth = brushSize;
+    currentSketchCanvas.ctx.drawLine(0,0,mousePosSketchCanvas.x,mousePosSketchCanvas.y, true, 50, "square")
 }
 
 function draw() {

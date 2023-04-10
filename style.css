@@ -1,4 +1,7 @@
 /* General styles */
+html {
+  --global-zoom: 1;
+}
 body {
   margin: 0;
   padding: 0;
