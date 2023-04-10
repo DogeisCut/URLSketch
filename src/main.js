@@ -375,38 +375,48 @@ canvas.addEventListener('mouseup', () => {
     leftmousedown = false
 });
 
-CanvasRenderingContext2D.prototype.drawLine = function(x1, y1, x2, y2, enableAA = false, brushSize = 1, brushShape = 'square') {
+CanvasRenderingContext2D.prototype.drawLine = function(x1, y1, x2, y2, enableAA = false, brushSize = 1, brushShape = 'square', pointTowards = false) {
     // Determine the line direction and slope
     var dx = Math.abs(x2 - x1);
     var dy = Math.abs(y2 - y1);
     var sx = (x1 < x2) ? 1 : -1;
     var sy = (y1 < y2) ? 1 : -1;
     var err = dx - dy;
-  
+
     // Calculate the supersampling factor (1 for no AA, 2 or higher for AA)
     var ssFactor = enableAA ? 2 : 1;
-  
+
     // Set the brush size and shape
     var brushWidth = brushSize / ssFactor;
     var brushHeight = brushSize / ssFactor;
     var brushShapeFn = brushShape === 'square' ? this.fillRect.bind(this) : this.fillCircle.bind(this);
-  
+    var angle = pointTowards ? Math.atan2(y2 - y1, x2 - x1) : 0;
+
     // Draw each supersampled pixel of the line
     while (true) {
+      // Calculate the angle between the current point and the end point
+      
+
       // Draw the current supersampled pixel(s)
       for (var i = 0; i < ssFactor; i++) {
         for (var j = 0; j < ssFactor; j++) {
           var ssx = x1 + (i + 0.5) / ssFactor;
           var ssy = y1 + (j + 0.5) / ssFactor;
-          brushShapeFn(ssx - brushWidth / 2, ssy - brushHeight / 2, brushWidth, brushHeight);
+
+          // Apply rotation to the brush shape
+          this.save();
+          this.translate(ssx, ssy);
+          this.rotate(angle);
+          brushShapeFn(-brushWidth / 2, -brushHeight / 2, brushWidth, brushHeight);
+          this.restore();
         }
       }
-  
+
       // If we've reached the end point, exit the loop
       if (Math.abs(x1 - x2) < 1 && Math.abs(y1 - y2) < 1) {
         break;
       }
-  
+
       // Calculate the error and advance to the next pixel
       var e2 = 2 * err;
       if (e2 > -dy) {
@@ -418,14 +428,15 @@ CanvasRenderingContext2D.prototype.drawLine = function(x1, y1, x2, y2, enableAA 
         y1 += sy;
       }
     }
-  }
+  };
   
   // Define a fillCircle() method to draw a circle with the given parameters
   CanvasRenderingContext2D.prototype.fillCircle = function(x, y, r) {
     this.beginPath();
     this.arc(x + r / 2, y + r / 2, r / 2, 0, 2 * Math.PI);
     this.fill();
-  }
+  };
+
   
   
   
@@ -442,7 +453,7 @@ function brush() {
     currentSketchCanvas.ctx.lineCap = "round";
     currentSketchCanvas.ctx.strokeStyle = '#ff0000';
     currentSketchCanvas.ctx.lineWidth = brushSize;
-    currentSketchCanvas.ctx.drawLine(0,0,mousePosSketchCanvas.x,mousePosSketchCanvas.y, true, 50, "square")
+    currentSketchCanvas.ctx.drawLine(0,0,mousePosSketchCanvas.x,mousePosSketchCanvas.y, true, 50, "square", true)
 }
 
 function draw() {
